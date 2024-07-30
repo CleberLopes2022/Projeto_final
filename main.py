@@ -38,8 +38,9 @@ fig.update_layout(xaxis_title='Ano', yaxis_title='Número de Mortes', xaxis_tick
 st.plotly_chart(fig)
 
 st.subheader('Informação 1')
+st.write(' O ano 2021 como o ano com mais mortes neste período, com 1832649 milhões de mortes.',)
 st.write('Os Homens representam aproximadamente 57.33% do total de mortes, enquanto as Mulheres representam aproximadamente 42.58% do total de mortes.')
-
+st.write(' ')
 
 st.subheader('Principais causas de mortalidade')
 
