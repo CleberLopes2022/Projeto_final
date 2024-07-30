@@ -59,11 +59,10 @@ fig.update_layout(xaxis_title='Causa', yaxis_title='Quantidade', xaxis_tickangle
 st.plotly_chart(fig)
 
 st.subheader('Informação 2')
-st.write("Podemos observar que o Infarto agudo do miocárdio é de longe a causa de morte mais comum no Brasil")
+st.write('Podemos observar que o Infarto agudo do miocárdio é de longe a causa de morte mais comum no Brasil')
 st.subheader(' ')
 
 st.subheader('Mortalidade fetal x não_fetal')
-st.subheader(' ')
 # Dados fornecidos
 labels = ['Fetal', 'Não Fetal']
 sizes = [25248, 46332609]
