@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sn
+import plotly.express as px
 sn.set()
 
 st.title('Índice de mortalidade no Brasil de 1979 a 2023')
