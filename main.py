@@ -1,13 +1,14 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-import seaborn as sn
 import plotly.express as px
+import seaborn as sn
 sn.set()
 
 st.title('Índice de mortalidade no Brasil de 1979 a 2023')
 
 st.header('Principais Métricas de mortalidade')
+
 
 # Define the CSS style
 link_style = """
@@ -26,9 +27,10 @@ with st.sidebar:
     st.title('Análise de mortes no Brasil')
     st.image('estatistica.jpeg')
     st.write(" ")
-    
     # Aplica o estilo
     st.markdown(link_style, unsafe_allow_html=True)
+
+# Cria o link
     st.markdown('[Ministério da Saúde - Covid-19 No Brasil](https://infoms.saude.gov.br/extensions/covid-19_html/covid-19_html.html)', unsafe_allow_html=True)
     st.write(" ")
     st.write('O conjunto de dados analisados foram retirados de 24 arquivos csv , contendo mais 46 milhoes de linhas no total de dados registrados.')
@@ -55,10 +57,10 @@ fig.update_layout(xaxis_title='Ano', yaxis_title='Número de Mortes', xaxis_tick
 # Exibir o gráfico no Streamlit
 st.plotly_chart(fig)
 
+
 st.subheader('Informação 1')
-st.write('O ano de 2021 registrou o maior número de mortes no período, totalizando 1.832.649 óbitos.')
-st.write('Os Homens representam aproximadamente 57.33% do total de mortes, enquanto as Mulheres representam aproximadamente 42.58% do total de mortes.')
-st.write(' ')
+st.write('Os Homens representam aproximadamente 57.33% do total de mortes, enquanto as Mulheres representam aproximadamente 42.58% do total de mortes. ')
+
 
 st.subheader('Principais causas de mortalidade')
 
@@ -76,10 +78,14 @@ fig.update_layout(xaxis_title='Causa', yaxis_title='Quantidade', xaxis_tickangle
 # Exibir o gráfico no Streamlit
 st.plotly_chart(fig)
 
+
 st.subheader('Informação 2')
 st.write("Podemos observar que o Infarto agudo do miocárdio é de longe a causa de morte mais comum no Brasil, conforme dados do ministério da saúde.")
 st.markdown('[Ministério da Saúde - Infarto do Miocárdio](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/i/infarto#:~:text=O%20Infarto%20Agudo%20do%20Mioc%C3%A1rdio,7%20casos%2C%20ocorra%20um%20%C3%B3bito.)', unsafe_allow_html=True)
 st.subheader(' ')
+
+
+
 
 # Dados
 data1 = {
@@ -126,13 +132,16 @@ st.subheader('Mortalidade fetal x não_fetal')
 labels = ['Fetal', 'Não Fetal']
 sizes = [25248, 46332609]
 colors = ['#ff9999','#66b3ff']
+explode = (0.1, 0)  # "explode" a fatia Fetal
 
-# Criação do gráfico de pizza interativo usando Plotly
-fig = px.pie(values=sizes, names=labels, title='Distribuição de Mortes Fetal vs Não Fetal', color_discrete_sequence=colors)
-fig.update_traces(textposition='inside', textinfo='percent+label', pull=[0.1, 0])
+# Criação do gráfico de pizza
+plt.figure(figsize=(10, 6))
+plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%',
+        shadow=True, startangle=140)
+plt.title('Distribuição de Mortes Fetal vs Não Fetal')
+plt.axis('equal')  # Garantir que o gráfico de pizza seja desenhado como um círculo
 
-# Exibir o gráfico no Streamlit
-st.plotly_chart(fig)
+st.pyplot(plt)
 
 
 st.subheader('Informação 4')
