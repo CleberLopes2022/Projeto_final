@@ -9,10 +9,28 @@ st.title('Índice de mortalidade no Brasil de 1979 a 2023')
 
 st.header('Principais Métricas de mortalidade')
 
+# Define the CSS style
+link_style = """
+<style>
+a {
+    color: blue; /* Mude a cor do texto aqui */
+    text-decoration: none; /* Remove sublinhado, se desejar */
+}
+a:hover {
+    color: blue; /* Cor quando o mouse está sobre o link */
+}
+</style>
+"""
 
 with st.sidebar:
     st.title('Análise de mortes no Brasil')
     st.image('estatistica.jpeg')
+    st.write(" ")
+    
+    # Aplica o estilo
+    st.markdown(link_style, unsafe_allow_html=True)
+    st.markdown('[Ministério da Saúde - Covid-19 No Brasil](https://infoms.saude.gov.br/extensions/covid-19_html/covid-19_html.html)', unsafe_allow_html=True)
+    st.write(" ")
     st.write('O conjunto de dados analisados foram retirados de 24 arquivos csv , contendo mais 46 milhoes de linhas no total de dados registrados.')
     st.write('Foram feitos vários tratamentos dos dados,como dados faltantes, colunas com nome diferente em cada arquivo e correção no formato de datas.')
     st.write('Através da biblioteca pandas, foi feito a análise e obtenção dos dados contidos neste site. Obrigado!')
@@ -59,8 +77,49 @@ fig.update_layout(xaxis_title='Causa', yaxis_title='Quantidade', xaxis_tickangle
 st.plotly_chart(fig)
 
 st.subheader('Informação 2')
-st.write('Podemos observar que o Infarto agudo do miocárdio é de longe a causa de morte mais comum no Brasil')
+st.write("Podemos observar que o Infarto agudo do miocárdio é de longe a causa de morte mais comum no Brasil, conforme dados do ministério da saúde.")
+st.markdown('[Ministério da Saúde - Infarto do Miocárdio](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/i/infarto#:~:text=O%20Infarto%20Agudo%20do%20Mioc%C3%A1rdio,7%20casos%2C%20ocorra%20um%20%C3%B3bito.)', unsafe_allow_html=True)
 st.subheader(' ')
+
+# Dados
+data = {
+    "Ano": [2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013],
+    "Quantidade": [1400590, 1544266, 1832649, 1556824, 1349801, 1316719, 1312663, 1309774, 1264175, 1227039, 1210474],
+    "Maior Causa": ["Infarto do Miocardio", "Infarto do Miocardio", "Covid-19", "Covid-19", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio"],
+    "Qt Maior Causa": [82915, 92151, 415935, 203429, 90355, 87286, 87800, 89989, 86674, 83746, 82514]
+}
+
+df = pd.DataFrame(data)
+
+# Lista suspensa para selecionar o ano
+ano_selecionado = st.selectbox("Selecione o ano e obterá a Maior causa de Morte e quantidade nesse ano:", df["Ano"])
+
+# Filtra os dados para o ano selecionado
+df_filtrado = df[df["Ano"] == ano_selecionado]
+
+# Cria um gráfico de barras para a quantidade total e a quantidade da maior causa
+df_melted = df_filtrado.melt(id_vars="Ano", value_vars=["Quantidade", "Qt Maior Causa"], var_name="Tipo", value_name="Valor")
+
+fig = px.bar(
+    df_melted,
+    x="Tipo",
+    y="Valor",
+    title=f"Dados para o ano {ano_selecionado}"
+)
+
+# Exibe os dados detalhados e o gráfico
+st.write(f"Ano: {ano_selecionado}")
+st.write(f"Quantidade Total de Mortes: {df_filtrado['Quantidade'].values[0]}.")
+st.write(f"A Maior Causa: {df_filtrado['Maior Causa'].values[0]}.")
+st.write(f"Quantidade da Maior Causa: {df_filtrado['Qt Maior Causa'].values[0]}.")
+
+# Exibe o gráfico
+st.plotly_chart(fig)
+
+st.subheader('Informação 3')
+st.write("Podemos observar que os unicos anos que o infarto do miocárdio não foi a princiapa causa, foi em 2020 e 2021 com o pico da covid-19.")
+st.write(" ")
+
 
 st.subheader('Mortalidade fetal x não_fetal')
 # Dados fornecidos
@@ -76,7 +135,7 @@ fig.update_traces(textposition='inside', textinfo='percent+label', pull=[0.1, 0]
 st.plotly_chart(fig)
 
 
-st.subheader('Informação 3')
+st.subheader('Informação 4')
 st.write('Morte por tipo de obito fetal foi de 25248, o que representa 0,1% dos dos dados.')
 
 
