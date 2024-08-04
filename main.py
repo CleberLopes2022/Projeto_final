@@ -82,14 +82,14 @@ st.markdown('[Ministério da Saúde - Infarto do Miocárdio](https://www.gov.br/
 st.subheader(' ')
 
 # Dados
-data = {
+data1 = {
     "Ano": [2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013],
     "Quantidade": [1400590, 1544266, 1832649, 1556824, 1349801, 1316719, 1312663, 1309774, 1264175, 1227039, 1210474],
     "Maior Causa": ["Infarto do Miocardio", "Infarto do Miocardio", "Covid-19", "Covid-19", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio", "Infarto do Miocardio"],
     "Qt Maior Causa": [82915, 92151, 415935, 203429, 90355, 87286, 87800, 89989, 86674, 83746, 82514]
 }
 
-df = pd.DataFrame(data)
+df = pd.DataFrame(data1)
 
 # Lista suspensa para selecionar o ano
 ano_selecionado = st.selectbox("Selecione o ano e obterá a Maior causa de Morte e quantidade nesse ano:", df["Ano"])
